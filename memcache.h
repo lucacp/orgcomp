@@ -1,18 +1,25 @@
 #include <iostream>
-
+#define SIZE 128
 namespace org{
 	void acessaMemoria(unsigned long endereco,bool inst);
 	void acessaCache(unsigned long endereco,bool inst);
 	struct Bloco{
 		int dado;
 		Bloco(){
-			dado=0;
+			dado=-1;
 		};
+		Bloco(int i){
+		dado=i;
+		}
 	};
 	struct mPri{
 		int count;
-		Bloco bloc[128];
-		
+		Bloco bloc[SIZE];
+		mPri(){
+			int i=0;
+			for(i=0;i<SIZE;i++)
+				bloc[i].dado=i;
+		}
 	};
 	struct mCache{
 		int count;
@@ -23,7 +30,7 @@ namespace org{
 		public:mCache(int as,int bs,int cs){
 			bs=bs>>3;
 			cs=cs>>3;
-			blo=new Bloco[cs];
+			blo=new Bloco[cs]();
 			lru=new int[cs];
 			var=cs;
 			count=0;
