@@ -1,30 +1,20 @@
-
 #include "memcache.h"
 
-using namespace std;
-using namespace org;
 void teste1(){
-	acessaMemoria(0,true);
-	acessaMemoria(0,true);
-	acessaMemoria(2,false);
-	acessaMemoria(2,false);
-
+	acessaCache(0,true);
+	acessaCache(0,true);
+	acessaCache(2,false);
+	acessaCache(2,false);
 };
 
+void initmemor(int a,int bs,int cs){
+	c=new mCache(a,bs,cs);
+	p=new mPri();
+}
 int main(int nargs,char** args){
-	int i=0,d,o;
-	mCache *c;
-	mPri *p;
-	cache=new mCache();
-	pri= new mPri();
-	o=0;
-	d=0;
-	cout << "\ndigite opção: ";
-	cin >> i;
-	if(i==1)
-	{
-		teste1();
-		cache->update();
-	}
+	initmemor(1,32,128);
+	teste1();
+	c->update();
+	teste1();
 	return 0;
 }
