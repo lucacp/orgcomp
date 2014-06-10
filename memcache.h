@@ -2,34 +2,47 @@
 
 namespace org{
 	void acessaMemoria(unsigned long endereco,bool inst);
+	void acessaCache(unsigned long endereco,bool inst);
 	struct Bloco{
-		unsigned char dado[2];
+		int dado;
+		Bloco(){
+			dado=0;
+		};
 	};
 	struct mPri{
 		int count;
 		Bloco bloc[128];
-		Bloco getBlocoP(int a){
-			count++;
-			return bloc[a];
-		};
+		
 	};
 	struct mCache{
 		int count;
-		mCache(int i,int a,int d){
-			
+		int var;
+		Bloco *blo;
+		int *lru;
+		mCache *c=NULL;
+		public:mCache(int as,int bs,int cs){
+			bs=bs>>3;
+			cs=cs>>3;
+			blo=new Bloco[cs];
+			lru=new int[cs];
+			var=cs;
+			count=0;
 		}
-		void update(int ender){
-			int i,o;
-			for(i=0;i<4;i++)
-				for(o=0;o<4;o++)
-					c[i].lru[o]++;
-		
+		public:void update(unsigned long ender){
+			int i;
+			i=ender>>var;
+			lru[i]=0;
 		};
+		public:void update(){
+			int i;
+			for(i=0;i<var;i++)
+				lru[i]++;
+		};
+		
 	};
-
-	void acessaMemoria(unsigned long endereco,bool inst){
-
-
-
-	}
+	
 };
+using namespace std;
+using namespace org;
+mCache *c=NULL;
+mPri *p=NULL;
