@@ -51,5 +51,6 @@ namespace org{
 };
 using namespace std;
 using namespace org;
-mCache *c=NULL;
+mCache *cd=NULL;
+mCache *ci=NULL;
 mPri *p=NULL;
