@@ -3,6 +3,8 @@ void initmemor(int a,int bs,int cs){
 	cd=new mCache(a,bs,cs);
 	ci=new mCache(a,bs,cs);
 	p=new mPri();
+	ci->c=new mCache(a,bs<<3,cs<<3);
+	cd->c=ci->c;
 }
 
 void teste1(){
@@ -29,11 +31,15 @@ void teste2(){
 	acessaCache(34,true);
 	acessaCache(34,true);
 };
+void stats(){
+	cout <<"Acessos: "<<cd->count+ci->count<<", Hits: "<< cd->count+ci->count+cd->c->count-p->count<<endl;
+};
 
 
 int main(int nargs,char** args){
 	initmemor(1,32,64);
 	teste1();
+	stats();
 	return 0;
 }
 void org::acessaCache(unsigned long endereco,bool inst){
@@ -41,23 +47,26 @@ void org::acessaCache(unsigned long endereco,bool inst){
 			ci->count++;
 			int i=0;
 			i=endereco%ci->var;
-			if(ci->blo[i].dado==p->bloc[endereco].dado)
+			if(ci->blo[i].dado==p->bloc[endereco].dado){
 				cout << "Hit "<<endl;
-			else
+			}
+			else{
 				acessaMemoria(endereco,inst);
-			ci->update(endereco);
+			};
 			ci->update();
+			ci->update(endereco);
 		}
 		else{
 			cd->count++;
 			int i=0;
 			i=endereco%ci->var;
-			if(cd->blo[i].dado==p->bloc[endereco].dado)
+			if(cd->blo[i].dado==p->bloc[endereco].dado){
 				cout << "Hit "<<endl;
+			}
 			else
 				acessaMemoria(endereco,inst);
-			cd->update(endereco);
 			cd->update();
+			cd->update(endereco);
 		};
 			
 	};
